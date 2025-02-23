@@ -1,5 +1,5 @@
 def process_text_content():
-    # 定义需要匹配的关键词列表
+
     narritive_keywords = [
         "Other",
         "Blaming the war on others rather than the invader",
@@ -105,23 +105,23 @@ def process_text_content():
 
     ]
 
-    # 文件处理
-    input_file = "/root/autodl-tmp/ai新/test/output/S2PT4o.txt"
-    output_file = "/root/autodl-tmp/ai新/test/output/S2PT4oF1.txt"
+
+    input_file = "/root/autodl-tmp/ai/test/output/S2PT4o.txt"
+    output_file = "/root/autodl-tmp/ai/test/output/S2PT4oF1.txt"
 
     with open(input_file, 'r', encoding='utf-8') as infile, \
          open(output_file, 'w', encoding='utf-8') as outfile:
 
         for line in infile:
-            # 分割行内容
+     
             parts = line.strip().split('\t')
             if len(parts) != 3:
-                print(f"格式错误行: {line.strip()}")
+                print(f"error: {line.strip()}")
                 continue
 
             filename, narritive, subnarritive = parts
             if narritive.startswith("URW"):
-                # 处理主叙事（保持原有逻辑）
+   
                 matched_narritive = []
                 for keyword in narritive_keywords:
                     if keyword in narritive:
@@ -132,7 +132,7 @@ def process_text_content():
                 else:
                     new_narritive = new_narritive
 
-                # 处理子叙事（保持原有逻辑）
+          
                 matched_subnarritive = []
                 for keyword in subnarritive_keywords:
                     if keyword in subnarritive:
@@ -144,10 +144,10 @@ def process_text_content():
                     new_subnarritive = new_subnarritive
                 outfile.write(f"{filename}\t{new_narritive}\t{new_subnarritive}\n")
 
-             # 写入结果
+ 
 
             elif narritive.startswith("CC"):
-                # 处理主叙事（保持原有逻辑）
+
                 matched_narritiveCC = []
                 for keyword in narritive_keywordsCC:
                     if keyword in narritive:
@@ -159,7 +159,7 @@ def process_text_content():
                     new_narritiveCC = new_narritiveCC
 
 
-                # 处理子叙事（保持原有逻辑）
+
                 matched_subnarritiveCC = []
                 for keyword in subnarritive_keywordsCC:
                     if keyword in subnarritive:
