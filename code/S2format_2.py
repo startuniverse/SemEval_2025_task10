@@ -1,8 +1,8 @@
 def process_text_content():
-    # 完整分类映射关系（根据参考代码所有分支构建）
+
     category_mapping = {
         "URW": {
-            # URW分类体系
+
             "Blaming the war on others rather than the invader": [
                 "Ukraine is the aggressor",
                 "The West are the aggressors"
@@ -63,7 +63,7 @@ def process_text_content():
             ]
         },
         "CC": {
-            # CC分类体系
+
             "Hidden plots by secret schemes of powerful groups": [
                 "Blaming global elites",
                 "Climate agenda has hidden motives"
@@ -122,10 +122,8 @@ def process_text_content():
         }
     }
 
-    # 文件处理
-    # 定义文件路径（请确认路径正确性）
-    input_file = "/root/autodl-tmp/ai新/test/output/S2PT4oF1.txt"
-    output_file = "/root/autodl-tmp/ai新/test/output/S2PT4oF2.txt"
+    input_file = "/root/autodl-tmp/ai/test/output/S2PT4oF1.txt"
+    output_file = "/root/autodl-tmp/ai/test/output/S2PT4oF2.txt"
 
     with open(input_file, 'r', encoding='utf-8') as infile, \
             open(output_file, 'w', encoding='utf-8') as outfile:
@@ -136,27 +134,27 @@ def process_text_content():
                 continue
 
             try:
-                # 解析字段
+         
                 filename, narritives_str, subnarritives_str = line.split('\t')
 
-                # 处理主分类（支持多个）
+          
                 coarse_categories = []
                 for narritive in narritives_str.split(';'):
                     if ':' in narritive:
                         _, coarse_value = narritive.split(':', 1)
                         coarse_categories.append(coarse_value.strip())
 
-                # 处理子分类
+     
                 processed_subs = []
                 for sub in subnarritives_str.split(';'):
-                    # 清洗子分类值
+     
                     sub_clean = sub.split(':', 1)[-1].strip() if ':' in sub else sub.strip()
                     matched = False
 
-                    # 遍历所有主分类寻找匹配
+       
                     for coarse_value in coarse_categories:
-                        # 获取分类类型（CC/URW）
-                        narritive_type = "CC" if "CC:" in sub else "URW"  # 根据实际情况调整
+                      
+                        narritive_type = "CC" if "CC:" in sub else "URW"  
 
                         if (coarse_value in category_mapping[narritive_type] and
                                 sub_clean in category_mapping[narritive_type][coarse_value]):
@@ -165,15 +163,15 @@ def process_text_content():
                             break
 
                     if not matched:
-                        processed_subs.append(sub)  # 保留原始格式
+                        processed_subs.append(sub) 
 
-                # 构建新行
+
                 new_line = f"{filename}\t{narritives_str}\t{';'.join(processed_subs)}"
                 outfile.write(new_line + '\n')
 
             except Exception as e:
-                print(f"处理行出错: {line} | 错误: {str(e)}")
-                outfile.write(line + '\n')  # 保留原始行
+                print(f"error: {line} | error: {str(e)}")
+                outfile.write(line + '\n') 
 
 
 if __name__ == "__main__":
